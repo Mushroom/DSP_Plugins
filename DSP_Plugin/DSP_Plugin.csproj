@@ -84,6 +84,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MassDelete.cs" />
+        <Compile Include="MorePlanets.cs" />
         <Compile Include="MoreStars.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Utils.cs" />

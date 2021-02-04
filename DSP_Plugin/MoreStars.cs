@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using UnityEngine.UI;
 
 namespace DSP_Plugin {
-    [BepInPlugin("touhma.dsp.plugins.galactic-scale", "Galactic Scale Plug-In", "1.0.0.0")]
+    [BepInPlugin("touhma.dsp.plugins.galactic-scale-stars", "Galactic Scale - Stars Plug-In", "1.0.0.0")]
     public class DSP_MoreStars : BaseUnityPlugin {
         private static ConfigEntry<int> _configStarsMax;
         private static ConfigEntry<int> _configStarsMin;
@@ -23,14 +20,14 @@ namespace DSP_Plugin {
                 "The Minimum Number of stars desired");
 
             var harmony = new Harmony("touhma.dsp.plugins.galactic-scale");
-            Harmony.CreateAndPatchAll(typeof(Patch));
+            Harmony.CreateAndPatchAll(typeof(PatchOnUIGalaxySelect));
             Harmony.CreateAndPatchAll(typeof(PatchOnUniverseGen));
             Harmony.CreateAndPatchAll(typeof(PatchOnStarGen));
-            Harmony.CreateAndPatchAll(typeof(PatchUIGalaxySlider));
+            Harmony.CreateAndPatchAll(typeof(PatchOnUIGalaxySlider));
         }
 
         [HarmonyPatch(typeof(UIGalaxySelect))]
-        private class Patch {
+        private class PatchOnUIGalaxySelect {
             [HarmonyPostfix]
             [HarmonyPatch("_OnInit")]
             public static void Postfix(UIGalaxySelect __instance, ref Slider ___starCountSlider) {
@@ -74,7 +71,7 @@ namespace DSP_Plugin {
         }
 
         [HarmonyPatch(typeof(UIGalaxySelect))]
-        private class PatchUIGalaxySlider {
+        private class PatchOnUIGalaxySlider {
             [HarmonyPrefix]
             [HarmonyPatch("UpdateUIDisplay")]
             public static void UIPrefix(UIGalaxySelect __instance, ref Slider ___starCountSlider) {
